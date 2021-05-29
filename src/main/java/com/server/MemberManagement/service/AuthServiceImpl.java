@@ -2,7 +2,7 @@ package com.server.MemberManagement.service;
 
 import com.server.MemberManagement.dto.MemberLoginRequestDto;
 import com.server.MemberManagement.dto.MemberSignupRequestDto;
-import com.server.MemberManagement.exception.UserAlreadyExistsException;
+import com.server.MemberManagement.advice.exception.UserAlreadyExistsException;
 import com.server.MemberManagement.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +20,7 @@ public class AuthServiceImpl implements AuthService {
         if(memberRepository.findByUsername(memberSignupDto.getUsername()) != null){
             throw new UserAlreadyExistsException();
         }
-//        memberSignupDto.setPassword(passwordEncoder.encode(memberSignupDto.getPassword()));
+        memberSignupDto.setPassword(passwordEncoder.encode(memberSignupDto.getPassword()));
         memberRepository.save(memberSignupDto.toEntity());
     }
 

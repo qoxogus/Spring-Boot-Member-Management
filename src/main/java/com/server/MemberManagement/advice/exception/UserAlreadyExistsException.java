@@ -1,4 +1,4 @@
-package com.server.MemberManagement.exception;
+package com.server.MemberManagement.advice.exception;
 
 public class UserAlreadyExistsException extends RuntimeException{
     public UserAlreadyExistsException(String msg, Throwable t){

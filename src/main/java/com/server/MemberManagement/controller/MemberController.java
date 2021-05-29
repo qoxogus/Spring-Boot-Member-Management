@@ -1,6 +1,8 @@
 package com.server.MemberManagement.controller;
 
 import com.server.MemberManagement.dto.MemberSignupRequestDto;
+import com.server.MemberManagement.response.CommonResult;
+import com.server.MemberManagement.response.ResponseService;
 import com.server.MemberManagement.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,10 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
 
     private final AuthService authService;
+    private final ResponseService responseService;
 
     @PostMapping("/signup")
-    public MemberSignupRequestDto signup(@RequestBody MemberSignupRequestDto memberSignupRequestDto) {
+    public CommonResult signup(@RequestBody MemberSignupRequestDto memberSignupRequestDto) {
         authService.signUp(memberSignupRequestDto);
-        return memberSignupRequestDto;
+        return responseService.getSuccessResult();
     }
 }
