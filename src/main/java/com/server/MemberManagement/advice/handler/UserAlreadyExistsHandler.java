@@ -10,6 +10,6 @@ import java.io.IOException;
 @Slf4j
 public class UserAlreadyExistsHandler {
     public void handle(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        response.sendRedirect("/exception/userNotFound");
+        response.sendRedirect("/exception/userAlreadyExists");
     }
 }

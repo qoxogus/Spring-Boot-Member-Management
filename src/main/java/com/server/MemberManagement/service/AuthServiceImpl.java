@@ -1,8 +1,10 @@
 package com.server.MemberManagement.service;
 
+import com.server.MemberManagement.advice.exception.UserNotFoundException;
 import com.server.MemberManagement.dto.MemberLoginRequestDto;
 import com.server.MemberManagement.dto.MemberSignupRequestDto;
 import com.server.MemberManagement.advice.exception.UserAlreadyExistsException;
+import com.server.MemberManagement.model.Member;
 import com.server.MemberManagement.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,7 +27,12 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public MemberLoginRequestDto login(String id, String password) {
-        return null;
+    public Member login(String username, String password) {
+        Member member = memberRepository.findByUsername(username);
+        if (member == null) throw new UserNotFoundException();
+        boolean passwordCheck = passwordEncoder.matches(password, member.getPassword());
+        System.out.println("passwordCheck = " + passwordCheck);
+        if (!passwordCheck) throw new UserNotFoundException();
+        return member;
     }
 }

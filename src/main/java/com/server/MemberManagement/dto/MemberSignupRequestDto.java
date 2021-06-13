@@ -19,7 +19,6 @@ public class MemberSignupRequestDto {
         return Member.builder()
                 .email(email)
                 .username(username)
-                .id(id)
                 .password(password)
                 .build();
     }
