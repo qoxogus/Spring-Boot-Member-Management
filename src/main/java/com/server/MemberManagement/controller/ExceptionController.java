@@ -21,7 +21,7 @@ public class ExceptionController {
     }
 
     @GetMapping(value = "/invalid-token")
-    public CommonResult invalidTokenException() {
+    public CommonResult invalidToken() {
         throw new InvalidTokenException();
     }
 
