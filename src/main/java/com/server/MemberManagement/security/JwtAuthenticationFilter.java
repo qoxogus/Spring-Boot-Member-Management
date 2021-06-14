@@ -43,15 +43,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // 유효한 토큰인지 확인
         try {
             if (accessJwt != null && jwtTokenProvider.validateToken(accessJwt)){
-                // 토큰이 유효하면 토큰으로부터 유저 정보를 받아온다.
-                Authentication authentication = jwtTokenProvider.getAuthentication(accessJwt);
                 username = jwtTokenProvider.getUserPk(accessJwt);
 
                 if (username != null) {
                     System.out.println("username = " + username);
                     UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+
+                    if(jwtTokenProvider.validateToken(accessJwt)){
+                        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
+                        usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                    }
                 }
-                SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (ExpiredJwtException e){
             if(refreshJwt != null){

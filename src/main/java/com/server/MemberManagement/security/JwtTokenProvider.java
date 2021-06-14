@@ -23,8 +23,8 @@ public class JwtTokenProvider {
 
     public final static long MILLI_SEC = 1000l; // 1밀리초
     public final static long HOUR = 3600;   //1시간
-
-    public final static long TOKEN_VALIDATION_SECOND = 1 * 60 * 1000L;;  //6시간을 accessToken 만료 기간으로 잡는다
+//1 * 60 * 1000L; 1분
+    public final static long TOKEN_VALIDATION_SECOND = MILLI_SEC * HOUR * 6;  //6시간을 accessToken 만료 기간으로 잡는다
     public final static long REFRESH_TOKEN_VALIDATION_SECOND = MILLI_SEC * HOUR * 24 * 180; //6개월을 refreshToken 만료 기간으로 잡는다.
 
     private final UserDetailsService userDetailsService;
