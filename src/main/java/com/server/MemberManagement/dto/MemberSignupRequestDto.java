@@ -1,9 +1,12 @@
 package com.server.MemberManagement.dto;
 
 import com.server.MemberManagement.model.Member;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Collections;
 
 @Getter
 @Setter
@@ -20,6 +23,7 @@ public class MemberSignupRequestDto {
                 .email(email)
                 .username(username)
                 .password(password)
+                .roles(Collections.singletonList("ROLE_USER"))
                 .build();
     }
 }

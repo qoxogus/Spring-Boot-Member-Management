@@ -11,10 +11,7 @@ import com.server.MemberManagement.service.AuthService;
 import com.server.MemberManagement.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -44,5 +41,10 @@ public class MemberController {
 
 
         return jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
+    }
+
+    @GetMapping("/user")
+    public String certifiedUser() {
+        return "Hi~ Certified You!!!";
     }
 }

@@ -32,6 +32,7 @@ public class AuthServiceImpl implements AuthService {
         if (member == null) throw new UserNotFoundException();
         boolean passwordCheck = passwordEncoder.matches(password, member.getPassword());
         System.out.println("passwordCheck = " + passwordCheck);
+        System.out.println("passwordCheck = " + passwordCheck);
         if (!passwordCheck) throw new UserNotFoundException();
         return member;
     }
