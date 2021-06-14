@@ -17,10 +17,10 @@ public class RedisTest {
 
     @Test
     public void redisTest() {
-        redisUtil.deleteData("EZY");
-        redisUtil.setData("EZY", "EZY-test");
-        System.out.println(redisUtil.getData("EZY"));
-        Assertions.assertThat(redisUtil.getData("EZY")).isEqualTo("EZY-test");
+        redisUtil.deleteData("Member-Management");
+        redisUtil.setData("Member-Management", "Member-Management-test");
+        System.out.println(redisUtil.getData("Member-Management"));
+        Assertions.assertThat(redisUtil.getData("Member-Management")).isEqualTo("Member-Management-test");
     }
 
 

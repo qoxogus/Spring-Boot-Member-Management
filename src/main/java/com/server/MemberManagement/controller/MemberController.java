@@ -35,12 +35,18 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public String login(@Valid @RequestBody MemberLoginRequestDto memberLoginRequestDto) throws Exception {
+    public SingleResult<Map<String, String>>  login(@Valid @RequestBody MemberLoginRequestDto memberLoginRequestDto) throws Exception {
         final Member member = authService.login(memberLoginRequestDto.getUsername(), memberLoginRequestDto.getPassword());
 
+        String token = jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
 
+//        redisUtil.setDataExpire(member.getUsername(), refreshJwt, jwtUtil.REFRESH_TOKEN_VALIDATION_SECOND);
+        Map<String ,String> map = new HashMap<>();
+        map.put("username", member.getUsername());
+        map.put("accessToken", token); // accessToken 반환
+//        map.put("refreshToken", refreshJwt); // refreshToken 반환
 
-        return jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
+        return responseService.getSingleResult(map);
     }
 
     @GetMapping("/user")
