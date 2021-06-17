@@ -56,7 +56,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     }
                 }
             }
-        } catch (ExpiredJwtException e){
+        } catch (ExpiredJwtException e){ //익셉션이 터지지않음 (왜??)
             if(refreshJwt != null){
                 refreshUsername = jwtTokenProvider.getUserPk(refreshJwt);
                 if(refreshUsername.equals(redisUtil.getData(refreshUsername))){
