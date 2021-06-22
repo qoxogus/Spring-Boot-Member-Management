@@ -1,6 +1,7 @@
 package com.server.MemberManagement.dto;
 
 import com.server.MemberManagement.model.Member;
+import com.server.MemberManagement.model.Role;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,7 @@ public class MemberSignupRequestDto {
                 .email(email)
                 .username(username)
                 .password(password)
-                .roles(Collections.singletonList("ROLE_USER"))
+                .roles(Collections.singletonList(Role.ROLE_USER))
                 .build();
     }
 }

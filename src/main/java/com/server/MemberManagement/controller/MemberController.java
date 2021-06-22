@@ -11,6 +11,7 @@ import com.server.MemberManagement.service.AuthService;
 import com.server.MemberManagement.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,6 +30,7 @@ public class MemberController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/signup")
+    @ResponseStatus(HttpStatus.CREATED)
     public CommonResult signup(@RequestBody MemberSignupRequestDto memberSignupRequestDto) {
         authService.signUp(memberSignupRequestDto);
         return responseService.getSuccessResult();
@@ -36,22 +38,7 @@ public class MemberController {
 
     @PostMapping("/login")
     public SingleResult<Map<String, String>>  login(@Valid @RequestBody MemberLoginRequestDto memberLoginRequestDto) throws Exception {
-        final Member member = authService.login(memberLoginRequestDto.getUsername(), memberLoginRequestDto.getPassword());
-
-        String token = jwtTokenProvider.createToken(member.getUsername());
-        String refreshToken = jwtTokenProvider.createRefreshToken(member.getUsername());
-
-        redisUtil.setDataExpire(member.getUsername(), refreshToken, jwtTokenProvider.REFRESH_TOKEN_VALIDATION_SECOND);
-        Map<String ,String> map = new HashMap<>();
-        map.put("username", member.getUsername());
-        map.put("accessToken", token); // accessToken 반환
-        map.put("refreshToken", refreshToken); // refreshToken 반환
-
-        return responseService.getSingleResult(map);
-    }
-
-    @GetMapping("/user")
-    public String certifiedUser() {
-        return "Hi~ Certified You!!!";
+        Map<String, String> loginResult = authService.login(memberLoginRequestDto);
+        return responseService.getSingleResult(loginResult);
     }
 }

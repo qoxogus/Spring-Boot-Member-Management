@@ -1,6 +1,5 @@
 package com.server.MemberManagement.security;
 
-import com.server.MemberManagement.advice.exception.UserNotFoundException;
 import com.server.MemberManagement.model.Member;
 import com.server.MemberManagement.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,15 +8,20 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+@RequiredArgsConstructor
+public class MyUserDetails implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UserNotFoundException {
-        Member findMember = memberRepository.findByUsername(username);
-        return (UserDetails) findMember;
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Member member = memberRepository.findByUsername(username);
+
+        if(username == null){
+            throw new UsernameNotFoundException("username not found");
+        }
+
+        return member;
     }
 }

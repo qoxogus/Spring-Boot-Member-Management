@@ -4,8 +4,10 @@ import com.server.MemberManagement.dto.MemberLoginRequestDto;
 import com.server.MemberManagement.dto.MemberSignupRequestDto;
 import com.server.MemberManagement.model.Member;
 
+import java.util.Map;
+
 public interface AuthService {
     void signUp(MemberSignupRequestDto memberSignupDto);
 
-    Member login(String id, String password);
+    Map<String, String> login(MemberLoginRequestDto loginDto);
 }
