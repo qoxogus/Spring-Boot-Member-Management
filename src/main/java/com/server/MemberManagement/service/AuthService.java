@@ -4,6 +4,7 @@ import com.server.MemberManagement.dto.EmailSendDto;
 import com.server.MemberManagement.dto.MemberLoginRequestDto;
 import com.server.MemberManagement.dto.MemberSignupRequestDto;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 public interface AuthService {
@@ -14,4 +15,7 @@ public interface AuthService {
     void sendVerificationMail(EmailSendDto emailSendDto);
 
     void verifyEmail(String key);
+
+    void logout(HttpServletRequest request);
+
 }

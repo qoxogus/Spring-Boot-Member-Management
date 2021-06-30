@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,6 +74,13 @@ public class AuthServiceImpl implements AuthService {
         Member findUser = memberRepository.findByUsername(username);
         if (findUser == null) throw new UserNotFoundException();
         redisUtil.deleteData(key);
+    }
+
+    @Override
+    public void logout(HttpServletRequest request) {
+        String accessToken = jwtTokenProvider.resolveToken(request);
+        String username = jwtTokenProvider.getUsername(accessToken);
+        redisUtil.deleteData(username);
     }
 
 

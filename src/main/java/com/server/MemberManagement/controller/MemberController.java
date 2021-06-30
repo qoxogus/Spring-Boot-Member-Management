@@ -28,8 +28,6 @@ public class MemberController {
 
     private final AuthService authService;
     private final ResponseService responseService;
-    private final RedisUtil redisUtil;
-    private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)
