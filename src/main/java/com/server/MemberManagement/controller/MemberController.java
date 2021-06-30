@@ -49,12 +49,13 @@ public class MemberController {
         return responseService.getSuccessResult();
     }
 
-    @PostMapping("/verify/email")
+    @PostMapping("/verify-email")
     public CommonResult verifyEmail(String key) {
         authService.verifyEmail(key);
         return responseService.getSuccessResult();
     }
 
+    //비밀번호 변경 요청 전 이메일 인증하기
     @PutMapping("/password-change")
     public CommonResult passwordChange(@RequestBody PasswordChangeDto passwordChangeDto) {
         authService.changePassword(passwordChangeDto);

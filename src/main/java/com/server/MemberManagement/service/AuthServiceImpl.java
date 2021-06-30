@@ -1,11 +1,8 @@
 package com.server.MemberManagement.service;
 
 import com.server.MemberManagement.advice.exception.UserNotFoundException;
-import com.server.MemberManagement.dto.EmailSendDto;
-import com.server.MemberManagement.dto.MemberLoginRequestDto;
-import com.server.MemberManagement.dto.MemberSignupRequestDto;
+import com.server.MemberManagement.dto.*;
 import com.server.MemberManagement.advice.exception.UserAlreadyExistsException;
-import com.server.MemberManagement.dto.PasswordChangeDto;
 import com.server.MemberManagement.model.Member;
 import com.server.MemberManagement.repository.MemberRepository;
 import com.server.MemberManagement.security.JwtTokenProvider;
@@ -92,6 +89,15 @@ public class AuthServiceImpl implements AuthService {
         if (findUser == null) throw new UserNotFoundException();
         if (passwordEncoder.matches(passwordChangeDto.getCurrentPassword(), findUser.getPassword())) {
             findUser.updatePassword(passwordEncoder.encode(passwordChangeDto.getNewPassword()));
+        }
+    }
+
+    @Override
+    public void withdrawal(WithdrawalDto withdrawalDto) {
+        Member findUser = memberRepository.findByUsername(withdrawalDto.getNickname());
+        if (findUser == null) throw new UserNotFoundException();
+        if (passwordEncoder.matches(withdrawalDto.getPassword(), findUser.getPassword())) {
+            memberRepository.deleteById(findUser.getId());
         }
     }
 

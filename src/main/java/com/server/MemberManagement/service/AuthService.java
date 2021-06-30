@@ -1,9 +1,6 @@
 package com.server.MemberManagement.service;
 
-import com.server.MemberManagement.dto.EmailSendDto;
-import com.server.MemberManagement.dto.MemberLoginRequestDto;
-import com.server.MemberManagement.dto.MemberSignupRequestDto;
-import com.server.MemberManagement.dto.PasswordChangeDto;
+import com.server.MemberManagement.dto.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -20,4 +17,6 @@ public interface AuthService {
     void logout(HttpServletRequest request);
 
     void changePassword(PasswordChangeDto passwordChangeDto);
+
+    void withdrawal(WithdrawalDto withdrawalDto);
 }
