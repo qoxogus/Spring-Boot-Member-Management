@@ -63,8 +63,16 @@ public class AuthServiceImpl implements AuthService {
         Member findUser = memberRepository.findByUsername(emailSendDto.getUsername());
         if (findUser == null) throw new UserNotFoundException();
         String authKey = keyUtil.getKey(6);
-        redisUtil.setDataExpire(authKey, findUser.getUsername(), 1000 * 60 * 30);
+        redisUtil.setDataExpire(authKey, findUser.getUsername(), 60 * 30L);
         emailService.sendMail(findUser.getEmail(), "비밀번호 변경 인증 이메일 입니다.", "인증번호 : "+authKey);
+    }
+
+    @Override
+    public void verifyEmail(String key) {
+        String username = redisUtil.getData(key);
+        Member findUser = memberRepository.findByUsername(username);
+        if (findUser == null) throw new UserNotFoundException();
+        redisUtil.deleteData(key);
     }
 
 

@@ -49,4 +49,10 @@ public class MemberController {
         authService.sendVerificationMail(emailSendDto);
         return responseService.getSuccessResult();
     }
+
+    @PostMapping("/verify/email")
+    public CommonResult verifyEmail(@RequestBody String key) {
+        authService.verifyEmail(key);
+        return responseService.getSuccessResult();
+    }
 }

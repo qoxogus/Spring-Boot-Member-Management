@@ -12,4 +12,6 @@ public interface AuthService {
     Map<String, String> login(MemberLoginRequestDto loginDto);
 
     void sendVerificationMail(EmailSendDto emailSendDto);
+
+    void verifyEmail(String key);
 }
