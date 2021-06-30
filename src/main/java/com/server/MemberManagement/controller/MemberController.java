@@ -3,6 +3,7 @@ package com.server.MemberManagement.controller;
 import com.server.MemberManagement.dto.EmailSendDto;
 import com.server.MemberManagement.dto.MemberLoginRequestDto;
 import com.server.MemberManagement.dto.MemberSignupRequestDto;
+import com.server.MemberManagement.dto.PasswordChangeDto;
 import com.server.MemberManagement.model.Member;
 import com.server.MemberManagement.response.CommonResult;
 import com.server.MemberManagement.response.ResponseService;
@@ -49,8 +50,14 @@ public class MemberController {
     }
 
     @PostMapping("/verify/email")
-    public CommonResult verifyEmail(@RequestBody String key) {
+    public CommonResult verifyEmail(String key) {
         authService.verifyEmail(key);
+        return responseService.getSuccessResult();
+    }
+
+    @PutMapping("/password-change")
+    public CommonResult passwordChange(@RequestBody PasswordChangeDto passwordChangeDto) {
+        authService.changePassword(passwordChangeDto);
         return responseService.getSuccessResult();
     }
 }

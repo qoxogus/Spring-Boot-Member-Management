@@ -42,6 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/v1/refreshtoken").permitAll()//
                 .antMatchers("/v1/email").permitAll()//
                 .antMatchers("/v1/verify/email").permitAll()//
+                .antMatchers("/v1/password-change").permitAll()//
                 .antMatchers("/v1/user/**").hasRole("USER")//
                 .antMatchers("/h2-console/**/**").permitAll()
                 // Disallow everything else..

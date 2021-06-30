@@ -5,6 +5,7 @@ import com.server.MemberManagement.dto.EmailSendDto;
 import com.server.MemberManagement.dto.MemberLoginRequestDto;
 import com.server.MemberManagement.dto.MemberSignupRequestDto;
 import com.server.MemberManagement.advice.exception.UserAlreadyExistsException;
+import com.server.MemberManagement.dto.PasswordChangeDto;
 import com.server.MemberManagement.model.Member;
 import com.server.MemberManagement.repository.MemberRepository;
 import com.server.MemberManagement.security.JwtTokenProvider;
@@ -13,6 +14,7 @@ import com.server.MemberManagement.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -81,6 +83,16 @@ public class AuthServiceImpl implements AuthService {
         String accessToken = jwtTokenProvider.resolveToken(request);
         String username = jwtTokenProvider.getUsername(accessToken);
         redisUtil.deleteData(username);
+    }
+
+    @Override
+    @Transactional
+    public void changePassword(PasswordChangeDto passwordChangeDto) {
+        Member findUser = memberRepository.findByUsername(passwordChangeDto.getUsername());
+        if (findUser == null) throw new UserNotFoundException();
+        if (passwordEncoder.matches(passwordChangeDto.getCurrentPassword(), findUser.getPassword())) {
+            findUser.updatePassword(passwordEncoder.encode(passwordChangeDto.getNewPassword()));
+        }
     }
 
 

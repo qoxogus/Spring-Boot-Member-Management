@@ -70,4 +70,8 @@ public class Member implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public void updatePassword(String password) {
+        this.password = password != null ? password : this.password;
+    }
 }
