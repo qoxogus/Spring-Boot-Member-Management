@@ -1,2 +1,12 @@
-package com.server.MemberManagement.dto;public class EmailSendDto {
+package com.server.MemberManagement.dto;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class EmailSendDto {
+
+    private String username;
+    private String email;
 }

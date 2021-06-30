@@ -38,7 +38,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
 
 
         if (redisUtil.getData(username).equals(refreshToken) && jwtTokenProvider.validateToken(refreshToken)) {
-            redisUtil.deleteData(username); //refreshToken이 저장되어있는 레디스 초기화 후 
+            redisUtil.deleteData(username); //refreshToken이 저장되어있는 레디스 초기화 후
             newAccessToken = jwtTokenProvider.createToken(username, roles);
             newRefreshToken = jwtTokenProvider.createRefreshToken();
             redisUtil.setDataExpire(username, newRefreshToken, 360000 * 1000l* 24 * 180); //새 refreshToken을 다시 저장

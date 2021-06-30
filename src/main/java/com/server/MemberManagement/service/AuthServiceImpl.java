@@ -1,12 +1,14 @@
 package com.server.MemberManagement.service;
 
 import com.server.MemberManagement.advice.exception.UserNotFoundException;
+import com.server.MemberManagement.dto.EmailSendDto;
 import com.server.MemberManagement.dto.MemberLoginRequestDto;
 import com.server.MemberManagement.dto.MemberSignupRequestDto;
 import com.server.MemberManagement.advice.exception.UserAlreadyExistsException;
 import com.server.MemberManagement.model.Member;
 import com.server.MemberManagement.repository.MemberRepository;
 import com.server.MemberManagement.security.JwtTokenProvider;
+import com.server.MemberManagement.util.KeyUtil;
 import com.server.MemberManagement.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,7 +24,9 @@ public class AuthServiceImpl implements AuthService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final EmailService emailService;
     private final RedisUtil redisUtil;
+    private final KeyUtil keyUtil;
 
     @Override
     public void signUp(MemberSignupRequestDto memberSignupDto) {
@@ -53,4 +57,15 @@ public class AuthServiceImpl implements AuthService {
 
         return map;
     }
+
+    @Override
+    public void sendVerificationMail(EmailSendDto emailSendDto) {
+        Member findUser = memberRepository.findByUsername(emailSendDto.getUsername());
+        if (findUser == null) throw new UserNotFoundException();
+        String authKey = keyUtil.getKey(6);
+        redisUtil.setDataExpire(authKey, findUser.getUsername(), 1000 * 60 * 30);
+        emailService.sendMail(findUser.getEmail(), "비밀번호 변경 인증 이메일 입니다.", "인증번호 : "+authKey);
+    }
+
+
 }

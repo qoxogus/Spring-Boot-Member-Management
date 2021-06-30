@@ -35,6 +35,22 @@ spring:
     basename: i18n/exception
     encoding: UTF-8
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: a01034367055@gmail.com
+    password: qoxogus1313
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+            required: true
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+
 logging:
   level:
     org.hibernate.type.descriptor.sql : trace

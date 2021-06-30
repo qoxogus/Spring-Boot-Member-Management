@@ -1,5 +1,6 @@
 package com.server.MemberManagement.controller;
 
+import com.server.MemberManagement.dto.EmailSendDto;
 import com.server.MemberManagement.dto.MemberLoginRequestDto;
 import com.server.MemberManagement.dto.MemberSignupRequestDto;
 import com.server.MemberManagement.model.Member;
@@ -8,6 +9,7 @@ import com.server.MemberManagement.response.ResponseService;
 import com.server.MemberManagement.response.SingleResult;
 import com.server.MemberManagement.security.JwtTokenProvider;
 import com.server.MemberManagement.service.AuthService;
+import com.server.MemberManagement.service.EmailService;
 import com.server.MemberManagement.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.ComponentScan;
@@ -40,5 +42,11 @@ public class MemberController {
     public SingleResult<Map<String, String>>  login(@Valid @RequestBody MemberLoginRequestDto memberLoginRequestDto) throws Exception {
         Map<String, String> loginResult = authService.login(memberLoginRequestDto);
         return responseService.getSingleResult(loginResult);
+    }
+
+    @PostMapping("/email")
+    public CommonResult email(@RequestBody EmailSendDto emailSendDto) {
+        authService.sendVerificationMail(emailSendDto);
+        return responseService.getSuccessResult();
     }
 }
