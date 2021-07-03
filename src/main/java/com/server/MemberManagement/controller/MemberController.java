@@ -37,6 +37,13 @@ public class MemberController {
         return responseService.getSuccessResult();
     }
 
+    @PostMapping("/signup-admin")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CommonResult signupAdmin(@RequestBody MemberSignupRequestDto memberSignupRequestDto) {
+        authService.signUpAdmin(memberSignupRequestDto);
+        return responseService.getSuccessResult();
+    }
+
     @PostMapping("/login")
     public SingleResult<Map<String, String>>  login(@Valid @RequestBody MemberLoginRequestDto memberLoginRequestDto) throws Exception {
         Map<String, String> loginResult = authService.login(memberLoginRequestDto);

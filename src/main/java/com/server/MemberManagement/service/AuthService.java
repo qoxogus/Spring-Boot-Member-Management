@@ -8,6 +8,8 @@ import java.util.Map;
 public interface AuthService {
     void signUp(MemberSignupRequestDto memberSignupDto);
 
+    void signUpAdmin(MemberSignupRequestDto memberSignupDto);
+
     Map<String, String> login(MemberLoginRequestDto loginDto);
 
     void sendVerificationMail(EmailSendDto emailSendDto);

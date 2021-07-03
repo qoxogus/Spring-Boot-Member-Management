@@ -38,6 +38,15 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    public void signUpAdmin(MemberSignupRequestDto memberSignupDto) {
+        if(memberRepository.findByUsername(memberSignupDto.getUsername()) != null){
+            throw new UserAlreadyExistsException();
+        }
+        memberSignupDto.setPassword(passwordEncoder.encode(memberSignupDto.getPassword()));
+        memberRepository.save(memberSignupDto.toEntityAdmin());
+    }
+
+    @Override
     public Map<String, String> login(MemberLoginRequestDto loginDto) {
         Member findUser = memberRepository.findByUsername(loginDto.getUsername());
         if (findUser == null) throw new UserNotFoundException();

@@ -27,4 +27,13 @@ public class MemberSignupRequestDto {
                 .roles(Collections.singletonList(Role.ROLE_USER))
                 .build();
     }
+
+    public Member toEntityAdmin() {
+        return Member.builder()
+                .email(email)
+                .username(username)
+                .password(password)
+                .roles(Collections.singletonList(Role.ROLE_ADMIN))
+                .build();
+    }
 }
