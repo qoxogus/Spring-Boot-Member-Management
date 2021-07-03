@@ -25,9 +25,10 @@ import static javax.persistence.EnumType.*;
 public class Member implements UserDetails {
 
     @Id @GeneratedValue
+    @Column(name = "MEMBER_ID")
     private Long id;
 
-    @Column(name = "MAMBER_EMAIL")
+    @Column(name = "MEMBER_EMAIL")
     private String email;
 
     @Column(name = "MEMBER_NAME")
