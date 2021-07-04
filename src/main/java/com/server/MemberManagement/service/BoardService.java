@@ -12,4 +12,6 @@ public interface BoardService {
     void saveBoard(BoardSaveDto boardSaveDto, HttpServletRequest request);
 
     Page<Board> readAllBoard(Pageable pageable);
+
+    String updateBoard(Long id, BoardSaveDto boardDto);
 }

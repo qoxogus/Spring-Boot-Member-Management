@@ -1,5 +1,6 @@
 package com.server.MemberManagement.model;
 
+import com.server.MemberManagement.dto.BoardSaveDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,4 +31,9 @@ public class Board {
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
+
+    public void updateBoard(String title, String contents) {
+        this.title = title != null ? title : this.title;
+        this.contents = contents != null ? contents : this.contents;
+    }
 }

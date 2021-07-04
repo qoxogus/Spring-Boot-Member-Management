@@ -33,4 +33,10 @@ public class BoardController {
         Page<Board> boards = boardService.readAllBoard(pageable);
         return responseService.getSingleResult(boards);
     }
+
+    @PutMapping("/board/{id}")
+    public CommonResult updateBoard(@PathVariable("id") Long id, @RequestBody BoardSaveDto boardDto) {
+        String s = boardService.updateBoard(id, boardDto);
+        return responseService.getSingleResult(s);
+    }
 }
