@@ -15,14 +15,19 @@ import javax.persistence.*;
 public class Board {
 
     @Id @GeneratedValue
+    @Column(name = "BOARD_ID")
     private Long id;
 
+    @Column(name = "BOARD_TITLE")
     private String title;
 
+    @Column(name = "BOARD_CONTENTS")
     private String contents;
 
+    @Column(name = "BOARD_WRITER")
     private String  writer;
 
-    public Board(Board board) {
-    }
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
 }

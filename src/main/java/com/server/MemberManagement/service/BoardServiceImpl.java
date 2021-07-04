@@ -27,6 +27,7 @@ public class BoardServiceImpl implements BoardService {
     public void saveBoard(BoardSaveDto boardSaveDto, HttpServletRequest request) {
         String token = jwtTokenProvider.resolveToken(request);
         String username = jwtTokenProvider.getUsername(token);
+        boardSaveDto.setMember(memberRepository.findByUsername(username));
         boardRepository.save(boardSaveDto.toEntity(username));
     }
 
