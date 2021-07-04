@@ -13,6 +13,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,6 +27,12 @@ public class BoardController {
     public CommonResult saveBoard(@RequestBody BoardSaveDto boardSaveDto, HttpServletRequest request) {
         boardService.saveBoard(boardSaveDto, request);
         return responseService.getSuccessResult();
+    }
+
+    @GetMapping("/board/{id}")
+    public CommonResult readById(@PathVariable("id") Long id) {
+        Optional<Board> board = boardService.readById(id);
+        return responseService.getSingleResult(board);
     }
 
     @GetMapping("/board")
