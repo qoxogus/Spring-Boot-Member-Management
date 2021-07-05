@@ -58,8 +58,7 @@ public class BoardController {
 
     @PostMapping("/board/{id}/comment")
     public CommonResult commentBoard(@PathVariable("id") Long id, @RequestBody CommentDto commentDto, HttpServletRequest request) {
-        commentService.saveComment(id, commentDto, request);
-        return responseService.getSuccessResult();
+        String data = commentService.saveComment(id, commentDto, request);
+        return responseService.getSingleResult(data);
     }
-    
 }

@@ -1,5 +1,6 @@
 package com.server.MemberManagement.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,6 +23,7 @@ public class Comment {
     private String contents;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "BOARD_ID")
     private Board board;
 }

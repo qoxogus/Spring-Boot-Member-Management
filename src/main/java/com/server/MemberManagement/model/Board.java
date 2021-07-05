@@ -1,5 +1,6 @@
 package com.server.MemberManagement.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.server.MemberManagement.dto.BoardSaveDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,6 +36,7 @@ public class Board {
     private Member member;
 
     @OneToMany(mappedBy = "board")
+    @JsonManagedReference
     private List<Comment> comments = new ArrayList<>();
 
     public void updateBoard(String title, String contents) {

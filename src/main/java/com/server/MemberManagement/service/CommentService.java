@@ -8,5 +8,4 @@ public interface CommentService {
 
     String saveComment(Long id, CommentDto commentDto, HttpServletRequest request);
 
-
 }

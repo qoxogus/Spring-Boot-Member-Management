@@ -24,9 +24,10 @@ public class CommentServiceImpl implements CommentService {
         String token = jwtTokenProvider.resolveToken(request);
         String username = jwtTokenProvider.getUsername(token);
         Board board = boardRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해담 게시물이 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다."));
         commentDto.setBoard(board);
         commentRepository.save(commentDto.toEntity(username));
         return id + "번 게시글에 댓글작성 완료.";
     }
+
 }
