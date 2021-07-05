@@ -1,5 +1,6 @@
 package com.server.MemberManagement.controller;
 
+import com.server.MemberManagement.dto.BoardResponseDto;
 import com.server.MemberManagement.dto.BoardSaveDto;
 import com.server.MemberManagement.dto.CommentDto;
 import com.server.MemberManagement.model.Board;
@@ -34,7 +35,7 @@ public class BoardController {
 
     @GetMapping("/board/{id}")
     public CommonResult readById(@PathVariable("id") Long id) {
-        Optional<Board> board = boardService.readById(id);
+        BoardResponseDto board = boardService.readById(id);
         return responseService.getSingleResult(board);
     }
 

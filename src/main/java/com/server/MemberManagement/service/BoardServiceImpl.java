@@ -1,18 +1,19 @@
 package com.server.MemberManagement.service;
 
+import com.server.MemberManagement.dto.BoardResponseDto;
 import com.server.MemberManagement.dto.BoardSaveDto;
 import com.server.MemberManagement.model.Board;
 import com.server.MemberManagement.repository.BoardRepository;
 import com.server.MemberManagement.repository.MemberRepository;
 import com.server.MemberManagement.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,9 +33,13 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public Optional<Board> readById(Long id) {
-        Optional<Board> findBoardById = boardRepository.findById(id);
-        return findBoardById;
+    public BoardResponseDto readById(Long id) {
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+        ModelMapper modelMapper = new ModelMapper();
+        BoardResponseDto map = modelMapper.map(board, BoardResponseDto.class);
+
+        return map;
     }
 
     @Override

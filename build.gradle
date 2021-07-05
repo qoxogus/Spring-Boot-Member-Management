@@ -45,6 +45,9 @@ dependencies {
 	// *** Email *** //
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 
+	// *** ModelMapper *** //
+	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
+
 	implementation group: 'net.rakugakibox.util', name: 'yaml-resource-bundle', version: '1.0'
 
 	implementation group: 'com.sun.xml.bind', name: 'jaxb-core', version: '2.3.0.1'
