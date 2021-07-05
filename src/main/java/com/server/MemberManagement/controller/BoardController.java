@@ -64,13 +64,13 @@ public class BoardController {
     }
 
     @PutMapping("/board/{board_id}/comment/{comment_id}")
-    public CommonResult commentBoard(@PathVariable("board_id") Long board_id, @PathVariable("comment_id") Long comment_id, @RequestBody CommentDto commentDto, HttpServletRequest request) {
+    public CommonResult commentUpdateBoard(@PathVariable("board_id") Long board_id, @PathVariable("comment_id") Long comment_id, @RequestBody CommentDto commentDto, HttpServletRequest request) {
         String data = commentService.updateComment(board_id, comment_id, commentDto, request);
         return responseService.getSingleResult(data);
     }
 
     @DeleteMapping("/board/{board_id}/comment/{comment_id}")
-    public CommonResult commentBoard(@PathVariable("board_id") Long board_id, @PathVariable("comment_id") Long comment_id, HttpServletRequest request) {
+    public CommonResult commentDeleteBoard(@PathVariable("board_id") Long board_id, @PathVariable("comment_id") Long comment_id, HttpServletRequest request) {
         String data = commentService.deleteComment(board_id, comment_id, request);
         return responseService.getSingleResult(data);
     }

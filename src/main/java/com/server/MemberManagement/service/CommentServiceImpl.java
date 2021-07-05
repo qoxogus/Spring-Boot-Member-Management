@@ -68,4 +68,30 @@ public class CommentServiceImpl implements CommentService {
         return board_id + "번 게시글의 " + comment_id + "번 댓글 삭제완료.";
     }
 
+    @Override
+    @Transactional
+    public String updateComment_Admin(Long board_id, Long comment_id, CommentDto commentDto) {
+        boardRepository.findById(board_id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다."));
+
+        Comment comment = commentRepository.findById(comment_id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 없습니다."));
+
+        comment.updateComment(commentDto.getContents());
+
+        return board_id + "번 게시글의 " + comment_id + "번 댓글 관리자 권한으로 수정완료.";
+    }
+
+    @Override
+    public String deleteComment_Admin(Long board_id, Long comment_id) {
+        boardRepository.findById(board_id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다."));
+
+        commentRepository.findById(comment_id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 없습니다."));
+
+        commentRepository.deleteById(comment_id);
+        return board_id + "번 게시글의 " + comment_id + "번 댓글 관리자 권한으로 삭제완료.";
+    }
+
 }

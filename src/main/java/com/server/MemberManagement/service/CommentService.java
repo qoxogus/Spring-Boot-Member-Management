@@ -11,4 +11,8 @@ public interface CommentService {
     String updateComment(Long board_id, Long comment_id, CommentDto commentDto, HttpServletRequest request);
 
     String deleteComment(Long board_id, Long comment_id, HttpServletRequest request);
+
+    String updateComment_Admin(Long board_id, Long comment_id, CommentDto commentDto);
+
+    String  deleteComment_Admin(Long board_id, Long comment_id);
 }
