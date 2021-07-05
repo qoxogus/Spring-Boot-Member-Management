@@ -1,5 +1,6 @@
 package com.server.MemberManagement.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,6 +37,10 @@ public class Member implements UserDetails {
 
     @Column(name = "MEMBER_PASSWORD")
     private String password;
+
+    @OneToMany(mappedBy = "member")
+    @JsonManagedReference
+    private List<Board> boards = new ArrayList<>();
 
     @Enumerated(STRING) @Column(name = "Role")
     @ElementCollection(fetch = FetchType.EAGER)

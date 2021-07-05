@@ -1,5 +1,6 @@
 package com.server.MemberManagement.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.server.MemberManagement.dto.BoardSaveDto;
 import lombok.AllArgsConstructor;
@@ -32,6 +33,7 @@ public class Board {
     private String  writer;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
