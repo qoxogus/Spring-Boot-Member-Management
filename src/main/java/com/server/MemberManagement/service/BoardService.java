@@ -19,4 +19,8 @@ public interface BoardService {
     String updateBoard(Long id, BoardSaveDto boardDto, HttpServletRequest request);
 
     String deleteBoard(Long id, HttpServletRequest request);
+
+    String updateBoard_Admin(Long id, BoardSaveDto boardDto);
+
+    String deleteBoard_Admin(Long id);
 }

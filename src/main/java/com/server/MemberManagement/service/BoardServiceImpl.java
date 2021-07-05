@@ -55,7 +55,7 @@ public class BoardServiceImpl implements BoardService {
 
         board.updateBoard(boardDto.getTitle(), boardDto.getContents());
 
-        return id + "번 게시물 업데이트 완료.";
+        return id + "번 게시물 수정 완료.";
     }
 
     @Override
@@ -70,5 +70,26 @@ public class BoardServiceImpl implements BoardService {
         boardRepository.deleteById(id);
 
         return id + "번 게시물 삭제 완료.";
+    }
+
+    @Override
+    @Transactional
+    public String updateBoard_Admin(Long id, BoardSaveDto boardDto) {
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+
+        board.updateBoard(boardDto.getTitle(), boardDto.getContents());
+
+        return id + "번 게시물 관리자 권한으로 수정 완료.";
+    }
+
+    @Override
+    public String deleteBoard_Admin(Long id) {
+        boardRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+
+        boardRepository.deleteById(id);
+
+        return id + "번 게시물 관리자 권한으로 삭제 완료.";
     }
 }
