@@ -34,12 +34,17 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public String updateComment(Long board_id, Long comment_id, CommentDto commentDto) {
+    public String updateComment(Long board_id, Long comment_id, CommentDto commentDto, HttpServletRequest request) {
         boardRepository.findById(board_id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다."));
 
         Comment comment = commentRepository.findById(comment_id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 없습니다."));
+
+        String token = jwtTokenProvider.resolveToken(request);
+        String username = jwtTokenProvider.getUsername(token);
+
+        if (comment.getWriter() != username) throw new IllegalArgumentException("자신이 쓴 댓글만 수정할 수 있습니다.");
 
         comment.updateComment(commentDto.getContents());
 
@@ -47,9 +52,17 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public String deleteComment(Long board_id, Long comment_id) {
+    public String deleteComment(Long board_id, Long comment_id, HttpServletRequest request) {
         boardRepository.findById(board_id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다."));
+
+        Comment comment = commentRepository.findById(comment_id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 없습니다."));
+
+        String token = jwtTokenProvider.resolveToken(request);
+        String username = jwtTokenProvider.getUsername(token);
+
+        if (comment.getWriter() != username) throw new IllegalArgumentException("자신이 쓴 댓글만 삭제할 수 있습니다.");
 
         commentRepository.deleteById(comment_id);
         return board_id + "번 게시글의 " + comment_id + "번 댓글 삭제완료.";

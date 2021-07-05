@@ -8,7 +8,7 @@ public interface CommentService {
 
     String saveComment(Long id, CommentDto commentDto, HttpServletRequest request);
 
-    String updateComment(Long board_id, Long comment_id, CommentDto commentDto);
+    String updateComment(Long board_id, Long comment_id, CommentDto commentDto, HttpServletRequest request);
 
-    String deleteComment(Long board_id, Long comment_id);
+    String deleteComment(Long board_id, Long comment_id, HttpServletRequest request);
 }
