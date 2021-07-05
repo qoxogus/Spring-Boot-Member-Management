@@ -46,4 +46,13 @@ public class CommentServiceImpl implements CommentService {
         return board_id + "번 게시글의 " + comment_id + "번 댓글 수정완료.";
     }
 
+    @Override
+    public String deleteComment(Long board_id, Long comment_id) {
+        boardRepository.findById(board_id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다."));
+
+        commentRepository.deleteById(comment_id);
+        return board_id + "번 게시글의 " + comment_id + "번 댓글 삭제완료.";
+    }
+
 }

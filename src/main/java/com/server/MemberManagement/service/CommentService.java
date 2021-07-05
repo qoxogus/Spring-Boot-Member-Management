@@ -9,4 +9,6 @@ public interface CommentService {
     String saveComment(Long id, CommentDto commentDto, HttpServletRequest request);
 
     String updateComment(Long board_id, Long comment_id, CommentDto commentDto);
+
+    String deleteComment(Long board_id, Long comment_id);
 }

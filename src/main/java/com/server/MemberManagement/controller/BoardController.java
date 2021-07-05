@@ -67,4 +67,10 @@ public class BoardController {
         String data = commentService.updateComment(board_id, comment_id, commentDto);
         return responseService.getSingleResult(data);
     }
+
+    @DeleteMapping("/board/{board_id}/comment/{comment_id}")
+    public CommonResult commentBoard(@PathVariable("board_id") Long board_id, @PathVariable("comment_id") Long comment_id) {
+        String data = commentService.deleteComment(board_id, comment_id);
+        return responseService.getSingleResult(data);
+    }
 }
