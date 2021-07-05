@@ -23,4 +23,9 @@ public class AdminBoardController {
         return responseService.getSingleResult(data);
     }
 
+    @DeleteMapping("/board/{id}")
+    public CommonResult deleteBoard_Admin(@PathVariable("id") Long id) {
+        String data = boardService.deleteBoard_Admin(id);
+        return responseService.getSingleResult(data);
+    }
 }
