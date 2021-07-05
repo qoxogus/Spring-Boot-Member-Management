@@ -1,11 +1,13 @@
 package com.server.MemberManagement.controller;
 
 import com.server.MemberManagement.dto.BoardSaveDto;
+import com.server.MemberManagement.dto.CommentDto;
 import com.server.MemberManagement.model.Board;
 import com.server.MemberManagement.response.CommonResult;
 import com.server.MemberManagement.response.ResponseService;
 import com.server.MemberManagement.response.SingleResult;
 import com.server.MemberManagement.service.BoardService;
+import com.server.MemberManagement.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +24,7 @@ public class BoardController {
 
     private final BoardService boardService;
     private final ResponseService responseService;
+    private final CommentService commentService;
 
     @PostMapping("/board")
     public CommonResult saveBoard(@RequestBody BoardSaveDto boardSaveDto, HttpServletRequest request) {
@@ -52,4 +55,11 @@ public class BoardController {
         String data = boardService.deleteBoard(id);
         return responseService.getSingleResult(data);
     }
+
+    @PostMapping("/board/{id}/comment")
+    public CommonResult commentBoard(@PathVariable("id") Long id, @RequestBody CommentDto commentDto, HttpServletRequest request) {
+        commentService.saveComment(id, commentDto, request);
+        return responseService.getSuccessResult();
+    }
+
 }
