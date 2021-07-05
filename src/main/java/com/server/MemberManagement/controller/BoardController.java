@@ -61,5 +61,5 @@ public class BoardController {
         commentService.saveComment(id, commentDto, request);
         return responseService.getSuccessResult();
     }
-
+    
 }

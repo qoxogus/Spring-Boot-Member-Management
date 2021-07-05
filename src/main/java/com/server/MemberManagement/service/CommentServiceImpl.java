@@ -20,12 +20,13 @@ public class CommentServiceImpl implements CommentService {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Override
-    public void saveComment(Long id, CommentDto commentDto, HttpServletRequest request) {
+    public String saveComment(Long id, CommentDto commentDto, HttpServletRequest request) {
         String token = jwtTokenProvider.resolveToken(request);
         String username = jwtTokenProvider.getUsername(token);
         Board board = boardRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해담 게시물이 없습니다."));
         commentDto.setBoard(board);
         commentRepository.save(commentDto.toEntity(username));
+        return id + "번 게시글에 댓글작성 완료.";
     }
 }

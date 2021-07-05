@@ -6,5 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface CommentService {
 
-    void saveComment(Long id, CommentDto commentDto, HttpServletRequest request);
+    String saveComment(Long id, CommentDto commentDto, HttpServletRequest request);
+
+
 }
