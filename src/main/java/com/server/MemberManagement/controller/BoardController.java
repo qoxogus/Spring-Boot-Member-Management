@@ -61,4 +61,10 @@ public class BoardController {
         String data = commentService.saveComment(id, commentDto, request);
         return responseService.getSingleResult(data);
     }
+
+    @PutMapping("/board/{board_id}/comment/{comment_id}")
+    public CommonResult commentBoard(@PathVariable("board_id") Long board_id, @PathVariable("comment_id") Long comment_id, @RequestBody CommentDto commentDto) {
+        String data = commentService.updateComment(board_id, comment_id, commentDto);
+        return responseService.getSingleResult(data);
+    }
 }

@@ -26,4 +26,8 @@ public class Comment {
     @JsonBackReference
     @JoinColumn(name = "BOARD_ID")
     private Board board;
+
+    public void updateComment(String contents) {
+        this.contents = contents != null ? contents : this.contents;
+    }
 }
