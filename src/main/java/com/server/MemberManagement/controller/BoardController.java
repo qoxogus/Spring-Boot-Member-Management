@@ -45,14 +45,14 @@ public class BoardController {
     }
 
     @PutMapping("/board/{id}")
-    public CommonResult updateBoard(@PathVariable("id") Long id, @RequestBody BoardSaveDto boardDto) {
-        String data = boardService.updateBoard(id, boardDto);
+    public CommonResult updateBoard(@PathVariable("id") Long id, @RequestBody BoardSaveDto boardDto, HttpServletRequest request) {
+        String data = boardService.updateBoard(id, boardDto, request);
         return responseService.getSingleResult(data);
     }
 
     @DeleteMapping("/board/{id}")
-    public CommonResult deleteBoard(@PathVariable("id") Long id) {
-        String data = boardService.deleteBoard(id);
+    public CommonResult deleteBoard(@PathVariable("id") Long id, HttpServletRequest request) {
+        String data = boardService.deleteBoard(id, request);
         return responseService.getSingleResult(data);
     }
 

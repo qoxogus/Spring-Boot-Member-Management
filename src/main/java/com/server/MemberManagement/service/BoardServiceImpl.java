@@ -45,9 +45,13 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     @Transactional
-    public String updateBoard(Long id, BoardSaveDto boardDto) {
+    public String updateBoard(Long id, BoardSaveDto boardDto, HttpServletRequest request) {
         Board board = boardRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+
+        String token = jwtTokenProvider.resolveToken(request);
+        String username = jwtTokenProvider.getUsername(token);
+        if (board.getWriter() != username) throw new IllegalArgumentException("자신의 게시글만 수정할 수 있습니다.");
 
         board.updateBoard(boardDto.getTitle(), boardDto.getContents());
 
@@ -55,9 +59,13 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public String deleteBoard(Long id) {
-        boardRepository.findById(id)
+    public String deleteBoard(Long id, HttpServletRequest request) {
+        Board board = boardRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+
+        String token = jwtTokenProvider.resolveToken(request);
+        String username = jwtTokenProvider.getUsername(token);
+        if (board.getWriter() != username) throw new IllegalArgumentException("자신의 게시글만 삭제할 수 있습니다.");
 
         boardRepository.deleteById(id);
 
