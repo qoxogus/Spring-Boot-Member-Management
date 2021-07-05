@@ -43,7 +43,13 @@ public class BoardController {
 
     @PutMapping("/board/{id}")
     public CommonResult updateBoard(@PathVariable("id") Long id, @RequestBody BoardSaveDto boardDto) {
-        String s = boardService.updateBoard(id, boardDto);
-        return responseService.getSingleResult(s);
+        String data = boardService.updateBoard(id, boardDto);
+        return responseService.getSingleResult(data);
+    }
+
+    @DeleteMapping("/board/{id}")
+    public CommonResult deleteBoard(@PathVariable("id") Long id) {
+        String data = boardService.deleteBoard(id);
+        return responseService.getSingleResult(data);
     }
 }

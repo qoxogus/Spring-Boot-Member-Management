@@ -53,4 +53,14 @@ public class BoardServiceImpl implements BoardService {
 
         return id + "번 게시물 업데이트 완료.";
     }
+
+    @Override
+    public String deleteBoard(Long id) {
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+
+        boardRepository.deleteById(id);
+
+        return id + "번 게시물 삭제 완료.";
+    }
 }

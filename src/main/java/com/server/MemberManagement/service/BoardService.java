@@ -17,4 +17,6 @@ public interface BoardService {
     Page<Board> readAllBoard(Pageable pageable);
 
     String updateBoard(Long id, BoardSaveDto boardDto);
+
+    String deleteBoard(Long id);
 }
