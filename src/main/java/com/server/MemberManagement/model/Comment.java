@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -15,7 +17,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Comment {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     private String writer;

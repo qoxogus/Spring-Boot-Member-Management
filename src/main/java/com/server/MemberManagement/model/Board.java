@@ -12,6 +12,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -19,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Board {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = IDENTITY)
     @Column(name = "BOARD_ID")
     private Long id;
 

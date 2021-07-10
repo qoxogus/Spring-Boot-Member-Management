@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static javax.persistence.EnumType.*;
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Getter
@@ -25,7 +26,7 @@ import static javax.persistence.EnumType.*;
 @AllArgsConstructor
 public class Member implements UserDetails {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = IDENTITY)
     @Column(name = "MEMBER_ID")
     private Long id;
 
