@@ -1,5 +1,6 @@
 package com.server.MemberManagement.service;
 
+import com.server.MemberManagement.advice.exception.InvalidTokenException;
 import com.server.MemberManagement.advice.exception.UserNotFoundException;
 import com.server.MemberManagement.dto.*;
 import com.server.MemberManagement.advice.exception.UserAlreadyExistsException;
@@ -13,7 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,13 +30,16 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void signUp(MemberSignupRequestDto memberSignupDto) {
-        if(memberRepository.findByUsername(memberSignupDto.getUsername()) != null){
+        if(!memberRepository.existsByUsername(memberSignupDto.getUsername())){
+            memberSignupDto.setPassword(passwordEncoder.encode(memberSignupDto.getPassword()));
+
+            memberRepository.save(memberSignupDto.toEntity());
+        } else {
             throw new UserAlreadyExistsException();
         }
-        memberSignupDto.setPassword(passwordEncoder.encode(memberSignupDto.getPassword()));
-        memberRepository.save(memberSignupDto.toEntity());
     }
 
+    //admin 확인하기 위해 만듦 실제 프로젝트에선 인증키를 받는 등 다른 방법 사용
     @Override
     public void signUpAdmin(MemberSignupRequestDto memberSignupDto) {
         if(memberRepository.findByUsername(memberSignupDto.getUsername()) != null){
@@ -69,26 +72,21 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void sendVerificationMail(EmailSendDto emailSendDto) {
-        Member findUser = memberRepository.findByUsername(emailSendDto.getUsername());
-        if (findUser == null) throw new UserNotFoundException();
         String authKey = keyUtil.getKey(6);
-        redisUtil.setDataExpire(authKey, findUser.getUsername(), 60 * 30L);
-        emailService.sendMail(findUser.getEmail(), "비밀번호 변경 인증 이메일 입니다.", "인증번호 : "+authKey);
+        redisUtil.setDataExpire(authKey, authKey, 60 * 30L);
+        emailService.sendMail(emailSendDto.getEmail(), "비밀번호 변경 인증 이메일 입니다.", "인증번호 : "+authKey);
     }
 
     @Override
     public void verifyEmail(String key) {
-        String username = redisUtil.getData(key);
-        Member findUser = memberRepository.findByUsername(username);
-        if (findUser == null) throw new UserNotFoundException();
-        redisUtil.deleteData(key);
+        if (key.equals(redisUtil.getData(key))){
+            redisUtil.deleteData(key);
+        } else throw new InvalidTokenException();
     }
 
     @Override
-    public void logout(HttpServletRequest request) {
-        String accessToken = jwtTokenProvider.resolveToken(request);
-        String username = jwtTokenProvider.getUsername(accessToken);
-        redisUtil.deleteData(username);
+    public void logout(String nickname) {
+        redisUtil.deleteData(nickname);
     }
 
     @Override

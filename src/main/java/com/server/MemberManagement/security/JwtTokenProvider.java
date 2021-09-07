@@ -26,8 +26,8 @@ public class JwtTokenProvider {
     @Value("${security.jwt.token.secret}")
     private String secretKey;
 
-    private long TOKEN_VALIDATION_SECOND = 360000; // 1h  360000
-    private long REFRESH_TOKEN_VALIDATION_TIME = TOKEN_VALIDATION_SECOND * 24 * 180; //6months
+    private static long TOKEN_VALIDATION_SECOND = 1000L * 60 * 60; // 1h
+    public static long REFRESH_TOKEN_VALIDATION_TIME = TOKEN_VALIDATION_SECOND * 24 * 180; //6month
 
     private final MyUserDetails myUserDetails;
 

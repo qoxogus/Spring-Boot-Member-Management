@@ -16,7 +16,7 @@ public interface AuthService {
 
     void verifyEmail(String key);
 
-    void logout(HttpServletRequest request);
+    void logout(String nickname);
 
     void changePassword(PasswordChangeDto passwordChangeDto);
 

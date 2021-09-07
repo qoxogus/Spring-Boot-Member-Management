@@ -16,7 +16,6 @@ public class MemberSignupRequestDto {
 
     private String email;
     private String username;
-    private String id;
     private String password;
 
     public Member toEntity() {

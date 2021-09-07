@@ -11,6 +11,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -30,25 +32,23 @@ public class Member implements UserDetails {
     @Column(name = "MEMBER_ID")
     private Long id;
 
-    @Column(name = "MEMBER_EMAIL")
+    @Email @NotNull
+    @Column(name = "MEMBER_EMAIL", unique = true)
     private String email;
 
-    @Column(name = "MEMBER_NAME")
+    @NotNull
+    @Column(name = "MEMBER_NAME", unique = true)
     private String username;
 
+    @NotNull
     @Column(name = "MEMBER_PASSWORD")
     private String password;
-
-    @OneToMany(mappedBy = "member")
-    @JsonManagedReference
-    private List<Board> boards = new ArrayList<>();
 
     @Enumerated(STRING) @Column(name = "Role")
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "Role", joinColumns = @JoinColumn(name = "UserIdx"))
     @Builder.Default
     private List<Role> roles = new ArrayList<>();
-
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Override

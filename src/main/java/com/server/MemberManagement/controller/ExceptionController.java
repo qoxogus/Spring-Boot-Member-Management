@@ -34,4 +34,14 @@ public class ExceptionController {
     public CommonResult customMethodArgumentNotValidException() {
         throw new CustomMethodArgumentNotValidException();
     }
+
+    @GetMapping(value = "/invalid-key")
+    public CommonResult invalidKey() {
+        throw new InvalidTokenException();
+    }
+
+    @GetMapping(value = "/token-refresh-fail")
+    public CommonResult tokenRefreshFail() {
+        throw new TokenRefreshFailException();
+    }
 }

@@ -39,11 +39,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()//
                 .antMatchers("/v1/login").permitAll()//
                 .antMatchers("/v1/signup").permitAll()//
-                .antMatchers("/v1/signup-admin").permitAll()//
+                .antMatchers("/v1/signup/admin").permitAll()//
                 .antMatchers("/v1/refreshtoken").permitAll()//
                 .antMatchers("/v1/email").permitAll()//
-                .antMatchers("/v1/verify-email").permitAll()//
-                .antMatchers("/v1/password-change").permitAll()//
+                .antMatchers("/v1/verify/email").permitAll()//
+                .antMatchers("/v1/change/password").permitAll()//
                 .antMatchers("/v1/user/**").hasRole("USER")//
                 .antMatchers("/v1/admin/**").hasRole("ADMIN")//
                 .antMatchers("/h2-console/**/**").permitAll()
